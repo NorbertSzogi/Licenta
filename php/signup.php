@@ -3,11 +3,20 @@
 ?>
 
 <link rel="stylesheet" type="text/css" href="/Licenta/css/signup.css">
+<div class="content">
 <form name="form1" action="#programari.php" method="post">
     <div class="container1">
         <div class="container">
             <h1 align="center" class="a">Inregistrare</h1>
             <hr>
+
+            <input type="radio" name="tip">Admin
+            <br>
+            <input type="radio" name="tip" checked>Utilizator
+
+            <br>
+            <br>
+            <br>
 
             <label for="nume"><b>Nume:</b></label>
             <input type="text" placeholder="Introdu numele" name="nume"  id="nume" required>
@@ -24,19 +33,36 @@
             <label for="pass2"><b>Reintroduceti parola:</b></label>
             <input type="password" placeholder="Introduceti parola" name="password2" required>
 
+            <hr>
+
             <button class="submit" type="submit" onclick="return validari(document.form1.email)">Trimite</button>
 
             <button class="reset" type="reset">Sterge</button>
+            <br>
+            <br>
+            <br>
+
 
         </div>
     </div>
 </form>
 
+</div>
+
 <br>
 <br>
 <br>
 <br>
 <br>
+<br>
+
+
+<?php
+
+include("footer.php");
+
+?>
+
 </body>
 <script>
 
@@ -48,7 +74,6 @@
 
         if(inputText.value.match(mailformat) && pass1.toString() == pass2.toString())
         {
-            document.form1.email.focus();
             return true;
         }
         else
