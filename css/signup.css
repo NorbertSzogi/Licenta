@@ -50,6 +50,7 @@ label{
 }
 
 input[type=text], input[type=password]{
+    color: black;
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -59,6 +60,26 @@ input[type=text], input[type=password]{
     opacity: 70%;
     font-family: "Comic Sans MS";
 }
+
+p.user_type{
+    color: white;
+    font-family: Algerian;
+    font-size: 15px;
+}
+
+
+
+input[type=radio]{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+
 
 input[type=text]:focus, input[type=password]:focus {
     background-color: #c5c6c7;

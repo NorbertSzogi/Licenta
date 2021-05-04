@@ -1,5 +1,5 @@
 <?php
-include("php/outHeader.php");
+include("include/outHeader.php");
 ?>
 
 
@@ -19,6 +19,6 @@ include("php/outHeader.php");
 </div>
 
 <?php
-include("php/footer.php");
+include("include/footer.php");
 ?>
 </html>

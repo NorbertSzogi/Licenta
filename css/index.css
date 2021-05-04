@@ -43,6 +43,7 @@ body.logged{
     z-index: -1;
     transition: all 0.3s ease 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
     border-radius: 23px;
+    min-width: 100px;
 }
 
 .menu:focus .ani-menu,

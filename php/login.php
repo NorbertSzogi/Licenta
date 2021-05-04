@@ -1,5 +1,5 @@
 <?php
-include("outHeader.php");
+include("../include/outHeader.php");
 ?>
 
 <link rel="stylesheet" type="text/css" href="/Licenta/css/signup.css">
@@ -10,8 +10,8 @@ include("outHeader.php");
             <h1 align="center" class="a">Autentificare</h1>
             <hr>
 
-            <label for="nume"><b>Nume:</b></label>
-            <input type="text" placeholder="Introdu numele" name="nume"  id="nume" required>
+            <label for="nume"><b>Email:</b></label>
+            <input type="text" placeholder="Introdu email-ul" name="email"  id="email" required>
 
             <label for="parola"><b>Parola:</b></label>
             <input type="password" placeholder="Introdu parola" name="password" id="password" required >
@@ -30,7 +30,7 @@ include("outHeader.php");
 </div>
 <?php
 
-include("footer.php");
+include("../include/footer.php");
 
 ?>
 

@@ -1,11 +1,11 @@
 <?php
-include("inHeaderAdmin.php");
+include("../include/inHeaderAdmin.php");
 ?>
-
+<title>Home</title>
 <div class="content">
 
 </div>
 
 <?php
-include("footer.php");
+include("../include/footer.php");
 ?>
