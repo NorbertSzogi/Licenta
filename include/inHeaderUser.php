@@ -20,11 +20,9 @@ include("connection.php");
 
             <nav>
                 <ul>
-                    <li class="menu"><a href="../php/mainAdmin.php"><img style="width: 30px;" alt="Meniu" src="/Licenta/images/menu.png"/></a>
+                    <li class="menu"><a href="../php/mainUser.php"><img style="width: 30px;" alt="Meniu" src="/Licenta/images/menu.png"/></a>
                         <ul class="ani-menu">
-                            <li><a href="/Licenta/php/mainAdmin.php"><p>Home</p></a></li>
-                            <li><a href="#/Licenta/php/adaugaCurs.php"><p>Adauga curs</p></a></li>
-                            <li><a href="/Licenta/php/stergeCurs.php"><p>Sterge curs</p></a></li>
+                            <li><a href="/Licenta/php/mainUser.php"><p>Home</p></a></li>
                             <li><a href="#/Licenta/php/edit_profile.php"><p>Editeaza profil</p></a></li>
                             <li><a href="/Licenta/php/logout.php">Logout</a></li>
                         </ul>
@@ -33,7 +31,7 @@ include("connection.php");
             </nav>
 
             <div class="center">
-                <a href="/Licenta/php/mainAdmin.php"><img class="center" alt="Auto Learn" src="/Licenta/images/titlu.png"/></a>
+                <a href="/Licenta/php/mainUser.php"><img class="center" alt="Auto Learn" src="/Licenta/images/titlu.png"/></a>
             </div>
         </div>
     </div>

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <?php
 session_start();
-include("../include/inHeaderAdmin.php");
-if(!isset($_SESSION['admin_email'])){
+include("../include/inHeaderUser.php");
+if(!isset($_SESSION['user_email'])){
     header("location: ../index.php");
 }
+
+$user_email = $_SESSION["user_email"];
+
 ?>
 <title>Home</title>
 <div class="content">
     <?php
-        echo "admin\n";
-        $admin_email = $_SESSION["admin_email"];
-        echo $admin_email;
+
+
+        echo $user_email;
+
     ?>
 </div>
 

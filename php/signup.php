@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include("../include/outHeader.php");
 
 ?>
@@ -156,9 +157,26 @@ if(isset($_POST["submit"]))
             //echo "<script> window.open('security_failed.php', '_self') </script>";
         }
         else{
+            $email = $_POST["email"];
+
+            $check_email1 = "select * from admins where admin_email='$email'";
+            $check_email2 = "select * from users where user_email='$email'";
+            $run1 = mysqli_query($conn,$check_email1);
+            $run2 = mysqli_query($conn,$check_email2);
+
+            $rows1 = mysqli_num_rows($run1);
+            $rows2 = mysqli_num_rows($run2);
+
+            if($rows1 == 1 or $rows2 == 1){
+
+                //va urma
+                die("Ne pare rau, email ul este deja folosit!");
+            }
+
+
             $first_name = $_POST["first_name"];
             $last_name = $_POST["last_name"];
-            $email = $_POST["email"];
+
             $password = $_POST["password"];
 
             $id_max = "select * from admins";
@@ -180,7 +198,7 @@ if(isset($_POST["submit"]))
             if($maxim_id == -1){
 
                 $admin_id = "1";
-                $username = $first_name . "_" . $last_name . "_" . $admin_id;
+                $username = $first_name . "." . $last_name . "." . $admin_id;
 
                 $insert_admin = "insert into admins values('$admin_id', '$first_name', '$last_name', '$email', '$password', '$username')";
 
@@ -217,7 +235,66 @@ if(isset($_POST["submit"]))
     }
 
     if($userType == "utilizator"){
-        //...
+        $first_name = $_POST["first_name"];
+        $last_name = $_POST["last_name"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+
+
+        $check_email1 = "select * from users where user_email='$email'";
+        $check_email2 = "select * from admins where admin_email='$email'";
+        $run1 = mysqli_query($conn,$check_email1);
+        $run2 = mysqli_query($conn,$check_email2);
+
+        $rows1 = mysqli_num_rows($run1);
+        $rows2 = mysqli_num_rows($run2);
+
+        if($rows1 == 1 or $rows2 == 1){
+
+            //va urma
+            die("Ne pare rau, email ul este deja folosit!");
+        }
+
+        $check_id = "select * from users";
+        $run = mysqli_query($conn, $check_id);
+
+        $maxim_id = -1;
+        while($res = mysqli_fetch_array($run)){
+            if((int)$res["user_id"] > $maxim_id)
+            {
+                $maxim_id = (int)$res["user_id"];
+            }
+        }
+
+        echo $maxim_id;
+
+        if($maxim_id == -1)
+        {
+            $user_id = "1";
+            $username = $first_name . "." . $last_name . "." . $user_id;
+
+            $insert_user = "insert into users values('$user_id', '$first_name', '$last_name', '$email', '$password', '$username')";
+
+            $run_insert = mysqli_query($conn, $insert_user);
+
+            //va urma
+            echo "Ati fost introdus";
+        }
+        else{
+            $user_id = $maxim_id + 1;
+            $user_id = (string)$user_id;
+
+            $username = $first_name . "." . $last_name . "." . $user_id;
+
+            $insert_user = "insert into users values('$user_id', '$first_name', '$last_name', '$email', '$password', '$username')";
+
+            $run_insert = mysqli_query($conn, $insert_user);
+
+            //va urma
+            echo "Ati fost introdus";
+
+        }
+
     }
 }
 
