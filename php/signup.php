@@ -151,9 +151,7 @@ if(isset($_POST["submit"]))
 
         if($result == NULL)
         {
-            die("Parolele de securitate nu corespund!");
-
-            //va urma
+            echo "<script> alert('Parolele de securitate sunt gresite!') </script>";
             //echo "<script> window.open('security_failed.php', '_self') </script>";
         }
         else{
@@ -193,7 +191,7 @@ if(isset($_POST["submit"]))
                  }
             }
 
-            echo $maxim_id;
+            //echo $maxim_id;
 
             if($maxim_id == -1){
 
@@ -203,7 +201,7 @@ if(isset($_POST["submit"]))
                 $insert_admin = "insert into admins values('$admin_id', '$first_name', '$last_name', '$email', '$password', '$username')";
 
                 $run_insert = mysqli_query($conn, $insert_admin);
-
+                // if
                 echo "Felicitari, ati fost introdus in baza de date";
                 // echo username ul tau este
 
@@ -222,7 +220,7 @@ if(isset($_POST["submit"]))
                 $insert_admin = "insert into admins values('$admin_id','$first_name','$last_name','$email','$password','$username')";
 
                 $run_insert = mysqli_query($conn, $insert_admin);
-
+                // if
                 echo "Felicitari, ati fost introdus in baza de date";
                 //echo username ul tau este
 
@@ -266,7 +264,7 @@ if(isset($_POST["submit"]))
             }
         }
 
-        echo $maxim_id;
+
 
         if($maxim_id == -1)
         {

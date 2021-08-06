@@ -7,6 +7,10 @@ html,body{
     margin: 0;
 }
 
+body{
+    background-image: url("../images/fundalAdmin.jpg");
+}
+
 body.notLogged{
     overflow-x: hidden;
     background: url("../images/background.jpg") no-repeat center center fixed;
@@ -140,4 +144,27 @@ div.footer{
     width: 30%;
     margin-top: auto;
     padding: 40px 0;
+}
+
+div.gallery {
+    margin: 80px;
+    border: 10px solid #ccc;
+    float: left;
+    width: 300px;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: 300px;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid black;
+    background-color: white;
 }

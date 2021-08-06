@@ -45,11 +45,14 @@ if(isset($_POST["submit"]))
 
     $run_user = mysqli_query($conn,$check_user);
 
+
+
     $rows_user = mysqli_num_rows($run_user);
 
     if($rows_user == 1){
-        $_SESSION['user_email'] = $email;
+
         $result = mysqli_fetch_array($run_user);
+        $_SESSION['user_id'] = $result['user_id'];
 
         $user_id = $result["user_id"];
         echo "<script>alert('USER');</script>";
@@ -61,8 +64,9 @@ if(isset($_POST["submit"]))
     $rows_admin = mysqli_num_rows($run_admin);
 
     if($rows_admin == 1){
-        $_SESSION['admin_email'] = $email;
+
         $result = mysqli_fetch_array($run_admin);
+        $_SESSION['admin_id'] = $result['admin_id'];
 
         $admin_id = $result["admin_id"];
 

@@ -23,7 +23,6 @@ include("connection.php");
                     <li class="menu"><a href="../php/mainUser.php"><img style="width: 30px;" alt="Meniu" src="/Licenta/images/menu.png"/></a>
                         <ul class="ani-menu">
                             <li><a href="/Licenta/php/mainUser.php"><p>Home</p></a></li>
-                            <li><a href="#/Licenta/php/edit_profile.php"><p>Editeaza profil</p></a></li>
                             <li><a href="/Licenta/php/logout.php">Logout</a></li>
                         </ul>
                     </li>
