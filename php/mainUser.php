@@ -6,7 +6,7 @@ if(!isset($_SESSION['user_id'])){
     header("location: ../index.php");
 }
 
-$user_id = $_SESSION["user_id"];
+
 
 ?>
 <title>Home</title>
@@ -30,8 +30,8 @@ $user_id = $_SESSION["user_id"];
     </div>
 
     <div class="gallery">
-        <a href="#">
-            <img src="../images/teste.jpg" alt="Northern Lights" width="600" height="400">
+        <a href="viewCourses.php">
+            <img src="../images/cursuri.png" alt="Northern Lights" width="600" height="400">
         </a>
         <div class="desc">Vizualizeaza cursuri</div>
     </div>

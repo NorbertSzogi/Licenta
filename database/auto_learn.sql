@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mai 04, 2021 la 02:33 PM
+-- Timp de generare: aug. 07, 2021 la 07:37 AM
 -- Versiune server: 10.4.18-MariaDB
 -- Versiune PHP: 8.0.3
 
@@ -36,6 +36,14 @@ CREATE TABLE `admins` (
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Eliminarea datelor din tabel `admins`
+--
+
+INSERT INTO `admins` (`admin_id`, `first_name`, `last_name`, `admin_email`, `admin_pass`, `username`) VALUES
+('2', 'Szogi', 'Norber2', 'norby2608@gmail.com', '123', 'Darth Vader'),
+('3', 'Admin', '84654165', 'szogi_norbert@yahoo.com', '123', 'Admin.84654165.3');
+
 -- --------------------------------------------------------
 
 --
@@ -59,19 +67,21 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `courses` (
   `course_id` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL
+  `title` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `images`
+-- Structură tabel pentru tabel `files`
 --
 
-CREATE TABLE `images` (
-  `image_id` varchar(255) NOT NULL,
-  `image_course_id` varchar(255) NOT NULL,
-  `image_reference` varchar(255) NOT NULL
+CREATE TABLE `files` (
+  `file_id` varchar(255) NOT NULL,
+  `file_course_id` varchar(255) NOT NULL,
+  `reference` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -156,17 +166,13 @@ CREATE TABLE `users` (
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Structură tabel pentru tabel `videos`
+-- Eliminarea datelor din tabel `users`
 --
 
-CREATE TABLE `videos` (
-  `video_id` varchar(255) NOT NULL,
-  `video_course_id` varchar(255) NOT NULL,
-  `video_reference` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `user_email`, `user_pass`, `username`) VALUES
+('1', 'User', '84654165tgdfgadfgdfg', 'norbert.szogi99@e-uvt.ro', '123', 'User.84654165.1'),
+('2', 'Szogi', 'Norbert', 'dianna_mihaela20@yahoo.com', '123', 'Szogi.Norbert.2');
 
 --
 -- Indexuri pentru tabele eliminate
@@ -177,8 +183,7 @@ CREATE TABLE `videos` (
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`),
-  ADD UNIQUE KEY `admin_email` (`admin_email`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `admin_email` (`admin_email`);
 
 --
 -- Indexuri pentru tabele `comments`
@@ -194,11 +199,11 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_id`);
 
 --
--- Indexuri pentru tabele `images`
+-- Indexuri pentru tabele `files`
 --
-ALTER TABLE `images`
-  ADD PRIMARY KEY (`image_id`),
-  ADD KEY `image_course_id` (`image_course_id`);
+ALTER TABLE `files`
+  ADD PRIMARY KEY (`file_id`),
+  ADD KEY `file_course_id` (`file_course_id`);
 
 --
 -- Indexuri pentru tabele `question`
@@ -233,25 +238,11 @@ ALTER TABLE `texts`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `user_email` (`user_email`);
-
---
--- Indexuri pentru tabele `videos`
---
-ALTER TABLE `videos`
-  ADD PRIMARY KEY (`video_id`),
-  ADD KEY `video_course_id` (`video_course_id`);
 
 --
 -- Constrângeri pentru tabele eliminate
 --
-
---
--- Constrângeri pentru tabele `images`
---
-ALTER TABLE `images`
-  ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`image_course_id`) REFERENCES `courses` (`course_id`);
 
 --
 -- Constrângeri pentru tabele `quiz`

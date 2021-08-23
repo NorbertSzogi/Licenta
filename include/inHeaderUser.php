@@ -22,15 +22,15 @@ include("connection.php");
                 <ul>
                     <li class="menu"><a href="../php/mainUser.php"><img style="width: 30px;" alt="Meniu" src="/Licenta/images/menu.png"/></a>
                         <ul class="ani-menu">
-                            <li><a href="/Licenta/php/mainUser.php"><p>Home</p></a></li>
-                            <li><a href="/Licenta/php/logout.php">Logout</a></li>
+                            <li><a href="../php/mainUser.php"><p>Home</p></a></li>
+                            <li><a href="../php/logout.php">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
             </nav>
 
             <div class="center">
-                <a href="/Licenta/php/mainUser.php"><img class="center" alt="Auto Learn" src="/Licenta/images/titlu.png"/></a>
+                <a href="../php/mainUser.php"><img class="center" alt="Auto Learn" src="/Licenta/images/titlu.png"/></a>
             </div>
         </div>
     </div>

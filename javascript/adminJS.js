@@ -8,13 +8,46 @@ function addLabel(){
     var formular = document.getElementById("formular");
 
 
-    var added = '<br><label class="texts"><b>Introduceti textul</b></label>' +
+    /*var added = '<br><label class="texts"><b>Introduceti textul</b></label>' +
         '<input type="text" placeholder="Introduceti textul" name="' + text +'">' +
 
         '<label><b>Introduceti imaginea</b></label><br>' +
         '<input type="file" name="' + file + '">';
 
-    formular.appendChild(added);
+    formular.appendChild(added);*/
+
+    var newline = document.createElement("br");
+    var label = document.createElement("label");
+    label.className = "texts";
+    var b = document.createElement("b");
+    b.textContent = "Introduceti textul";
+    label.appendChild(b);
+    //label.appendChild(document.createElement("b").innerHTML="Introduceti textul");
+    formular.appendChild(newline);
+
+    formular.appendChild(label);
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Introduceti textul";
+    input.name = text;
+
+    formular.appendChild(input);
+
+    label = document.createElement("label");
+    var b2 = document.createElement("b");
+    b2.textContent = "Introduceti imaginea sau videoclipul";
+    label.appendChild(b2);
+    //label.appendChild(document.createElement("b").innerHTML = "Introduceti imaginea");
+
+    formular.appendChild(label);
+    formular.appendChild(document.createElement("br"));
+
+    input = document.createElement("input");
+    input.type = "file";
+    input.name = file;
+
+    formular.appendChild(input);
 
     /*
     formular.innerHTML = formular.innerHTML + '<br><label class="texts"><b>Introduceti textul</b></label>' +
@@ -58,4 +91,13 @@ function classNames(){
 
     createCookie("identities",identities.toString(),"1");
 
+}
+
+function questionValue(questionId, choiceId){
+
+    var choice = document.getElementById(choiceId);
+
+    questionId.value = choice.value;
+
+    alert(questionId.value);
 }

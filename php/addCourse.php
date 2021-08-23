@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <?php
 session_start();
 if(!isset($_SESSION['admin_id'])){
@@ -18,7 +18,7 @@ include("../include/inHeaderAdmin.php");
             <div class="container">
                 <div id="formular">
                     <h1 align="center" class="a">Adauga curs</h1>
-                    <button onclick="addLabel()">+</button>
+                    <button type="button" onclick="addLabel()">+</button>
                     <hr>
 
                     <label for="titlu"><b>Titlu:</b></label>
@@ -193,7 +193,9 @@ if(isset($_POST['submit'])) {
         $i++;
     }
 
-    error_reporting(E_ALL);
+
+
+    echo "<script>alert('Cursul a fost adaugat!')</script>";
 
 
 
