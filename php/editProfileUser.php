@@ -3,6 +3,7 @@
 session_start();
 include("../include/inHeaderUser.php");
 $user_id = $_SESSION['user_id'];
+global $conn;
 
 $query = "SELECT * FROM users WHERE user_id='$user_id'";
 $run = mysqli_query($conn,$query);
@@ -21,7 +22,7 @@ $username = $res['username'];
 <title>Editeaza profilul</title>
 
 
-<script type="text/javascript" src="/Licenta/javascript/adminJS.js" > </script>
+<script type="text/javascript" src="../javascript/adminJS.js" > </script>
 
 <div class="row">
     <div class="col-sm-2">
@@ -50,7 +51,7 @@ $username = $res['username'];
 
                 <tr align="center">
                     <td colspan="6">
-                        <input type="submit" class="btn btn-info" name="update" style="width: 250px;" value="Update">
+                        <input type="submit" class="btn btn-info" name="update" style="width: 250px;" value="Editeaza">
 
 
             </table>
@@ -107,5 +108,6 @@ if(isset($_POST['update'])){
 
 }
 
+include("../include/footer.php");
 ?>
 

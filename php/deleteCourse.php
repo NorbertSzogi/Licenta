@@ -3,7 +3,7 @@ session_start();
 include ("../include/inHeaderAdmin.php");
 ?>
 
-    <link rel="stylesheet" type="text/css" href="../css/signup.css">
+    <link rel="stylesheet" type="text/css" href="../css/admin.css">
     <div class="content">
         <form action="" method="post">
             <div class="container1">
@@ -85,6 +85,15 @@ if(isset($_POST['submit'])){
         die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea cursului !')</script>");
     }
 
+    $selectFiles = "select * from files where file_course_id='$courseId'";
+    $runFiles = mysqli_query($conn, $selectFiles);
+
+    while ($result=mysqli_fetch_array($runFiles)){
+        if(strcmp($result["reference"], "0") != 0)
+            unlink($result["reference"]);
+    }
+
+
     $deleteFiles = "delete from files where file_course_id='$courseId'";
     $runFiles = mysqli_query($conn, $deleteFiles);
 
@@ -92,10 +101,17 @@ if(isset($_POST['submit'])){
         die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea cursului !')</script>");
     }
 
-    $deleteCourse = "delete from courses where course_id='$courseId'";
-    $runCourses = mysqli_query($conn, $deleteCourse);
+    $selectCourse = "select * from courses where course_id='$courseId'";
+    $runCourse = mysqli_query($conn, $selectCourse);
 
-    if(!$runCourses){
+    $result=mysqli_fetch_array($runCourse);
+    if(strcmp($result["image"], "0") != 0)
+        unlink($result["image"]);
+
+    $deleteCourse = "delete from courses where course_id='$courseId'";
+    $runCourse = mysqli_query($conn, $deleteCourse);
+
+    if(!$runCourse){
         die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea cursului !')</script>");
     }
 

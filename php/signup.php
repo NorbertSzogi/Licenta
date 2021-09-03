@@ -4,7 +4,7 @@
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="/Licenta/css/signup.css">
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
 <div class="content">
 <form name="form1" action="" method="post">
     <div class="container1">
@@ -248,9 +248,7 @@ if(isset($_POST["submit"]))
         $rows2 = mysqli_num_rows($run2);
 
         if($rows1 == 1 or $rows2 == 1){
-
-            //va urma
-            die("Ne pare rau, email ul este deja folosit!");
+            die("<script>alert('Ne pare rau, email-ul este deja folosit!')</script>");
         }
 
         $check_id = "select * from users";

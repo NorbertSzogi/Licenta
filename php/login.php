@@ -3,7 +3,7 @@ session_start();
 include("../include/outHeader.php");
 ?>
 
-<link rel="stylesheet" type="text/css" href="../css/signup.css">
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
 <div class="content">
 <form action="" method="post">
     <div class="container1">

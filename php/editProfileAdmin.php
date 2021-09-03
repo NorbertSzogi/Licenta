@@ -24,7 +24,8 @@ $username = $res['username'];
 <title>Editeaza profilul</title>
 
 
-<script type="text/javascript" src="/Licenta/javascript/adminJS.js" > </script>
+<script type="text/javascript" src="../javascript/adminJS.js" > </script>
+
 
 <div class="row">
     <div class="col-sm-2">
@@ -53,7 +54,7 @@ $username = $res['username'];
 
                 <tr align="center">
                     <td colspan="6">
-                        <input type="submit" class="btn btn-info" name="update" style="width: 250px;" value="Update">
+                        <input type="submit" class="btn btn-info" name="update" style="width: 250px;" value="Editeaza">
 
 
             </table>
@@ -108,3 +109,4 @@ if(isset($_POST['update'])){
     }
 
 }
+include("../include/footer.php");

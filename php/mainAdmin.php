@@ -17,7 +17,7 @@ if(!isset($_SESSION['admin_id'])){
 
     <div class="gallery">
         <a href="addCourse.php">
-            <img src="../images/adaugaCurs.jpg"" alt="Adauga curs" width="600" height="400">
+            <img src="../images/adaugaCurs.jpg" alt="Adauga curs" width="600" height="400">
         </a>
         <div class="desc">Adauga curs </div>
     </div>
@@ -47,7 +47,7 @@ if(!isset($_SESSION['admin_id'])){
     </div>
 
     <div class="gallery">
-        <a href="#">
+        <a href="chooseTest.php">
             <img src="../images/teste.jpg" alt="Northern Lights" width="600" height="400">
         </a>
         <div class="desc">Alege test</div>
@@ -58,6 +58,13 @@ if(!isset($_SESSION['admin_id'])){
             <img src="../images/cursuri.png" alt="Vizualizeaza cursuri" width="600" height="400">
         </a>
         <div class="desc">Vizualizeaza cursuri</div>
+    </div>
+
+    <div class="gallery">
+        <a href="deleteTest.php">
+            <img src="../images/cursuri.png" alt="Vizualizeaza cursuri" width="600" height="400">
+        </a>
+        <div class="desc">Sterge test</div>
     </div>
 
 

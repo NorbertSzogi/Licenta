@@ -22,7 +22,7 @@ function addLabel(){
     var b = document.createElement("b");
     b.textContent = "Introduceti textul";
     label.appendChild(b);
-    //label.appendChild(document.createElement("b").innerHTML="Introduceti textul");
+
     formular.appendChild(newline);
 
     formular.appendChild(label);
@@ -45,6 +45,7 @@ function addLabel(){
 
     input = document.createElement("input");
     input.type = "file";
+    input.className = "white_text";
     input.name = file;
 
     formular.appendChild(input);
@@ -64,8 +65,7 @@ function show_password(){
     var x = document.getElementById("mypass");
     if(x.type === "password"){
         x.type = "text";
-    }
-    else{
+    } else{
         x.type = "password";
     }
 }

@@ -9,29 +9,29 @@ include("../include/inHeaderAdmin.php");
 
 ?>
 <title>Home</title>
-<link rel="stylesheet" type="text/css" href="/Licenta/css/admin.css">
-<script type="text/javascript" src="/Licenta/javascript/adminJS.js" > </script>
-
+<link rel="stylesheet" type="text/css" href="../css/admin.css">
+<script type="text/javascript" src="../javascript/adminJS.js" > </script>
 <div class="content">
     <form action="" method="post" enctype="multipart/form-data">
         <div class="container1">
             <div class="container">
                 <div id="formular">
                     <h1 align="center" class="a">Adauga curs</h1>
-                    <button type="button" onclick="addLabel()">+</button>
+                    <button type="button" onclick="addLabel()">Adauga text/imagine</button>
                     <hr>
 
                     <label for="titlu"><b>Titlu:</b></label>
                     <input type="text" placeholder="Introdu titlul" name="titlu" >
 
-                    <label for="Subiect"><b>Subiect:</b></label>
-                    <input type="text" placeholder="Introdu subiectul" name="subiect"  >
+
+                    <label for="Fundal"><b>Imagine fundal:</b></label>
+                    <input class="white_text" type="file" name="Fundal"  >
 
                     <label class="texts"><b>Introduceti textul</b></label>
                     <input type="text" placeholder="Introduceti textul" name="text1">
 
                     <label><b>Introduceti imaginea sau videoclipul</b></label><br>
-                    <input type="file" name="file1">
+                    <input class="white_text" type="file" name="file1">
 
                 </div>
 
@@ -56,13 +56,16 @@ if(isset($_POST['submit'])) {
     $identities = $_COOKIE["identities"];
 
     $title = $_POST['titlu'];
-    $subject = $_POST['subiect'];
+
+    $postFundal = $_FILES['Fundal'];
 
     $id_max = "select * from courses";
 
     $run_id = mysqli_query($conn, $id_max);
 
     $maxim_id = -1;
+
+    $targetDir = "../uploads/";
 
     while($result2 = mysqli_fetch_array($run_id))
     {
@@ -76,20 +79,47 @@ if(isset($_POST['submit'])) {
 
         $course_id = "1";
 
-        $insert_course = "insert into courses values('$course_id', '$title', '$subject')";
-
-        $run_insert = mysqli_query($conn, $insert_course);
-
     }
     else{
         $course_id = $maxim_id + 1;
         $course_id = (string)$course_id;
 
-
-        $insert_course = "insert into courses values('$course_id', '$title', '$subject')";
-
-        $run_insert = mysqli_query($conn, $insert_course);
     }
+
+    if($postFundal['name'] !== "") {
+
+        $fileName = "fundal" . $course_id;
+        $targetFile = $targetDir . $postFundal['name'];
+
+        $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        $targetFile = $targetDir . $fileName . "." . $fileType;
+
+
+        if ($fileType != "jpg" && $fileType != "jpeg" && $fileType == "png" && $fileType == "gif") {
+            die("Formatul nu este acceptat.");
+        }
+
+        if (move_uploaded_file($postFundal["tmp_name"], $targetFile)) {
+            echo "The file " . htmlspecialchars(basename($targetFile)) . " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+
+        if ($fileType == "mp4")
+            $fileType = "video";
+        else
+            $fileType = "image";
+
+    }
+    else{
+        $targetFile = "0";
+        $fileType = "0";
+    }
+
+
+    $insert_course = "insert into courses values('$course_id', '$title', '$targetFile')";
+    $run_insert_course = mysqli_query($conn, $insert_course);
 
     $i = 1;
 
@@ -134,7 +164,7 @@ if(isset($_POST['submit'])) {
 
     //error_reporting(0);
 
-    $targetDir = "../uploads/";
+
 
 
     while($i <= $identities){
@@ -200,6 +230,10 @@ if(isset($_POST['submit'])) {
 
 
 }
+?>
+<br><br><br><br><br><br>
 
+<?php
+include("../include/footer.php");
 ?>
 
