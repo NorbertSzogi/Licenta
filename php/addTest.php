@@ -2,12 +2,12 @@
 include("../include/inHeaderAdmin.php");
 
 ?>
-    <script type="text/javascript" src="../javascript/adminJS.js" > </script>
+<script type="text/javascript" src="../javascript/adminJS.js" > </script>
 <link rel="stylesheet" type="text/css" href="../css/admin.css">
 
 
 <div class="content">
-        <form action="" method="post">
+        <form action="" method="post" name="form1">
             <div class="container1">
                 <div class="container">
                     <h1 align="center" class="a">Adaugare test</h1>
@@ -109,7 +109,7 @@ include("../include/inHeaderAdmin.php");
 
                     <hr>
 
-                    <button class="submit" type="submit" name="submit">Adauga</button>
+                    <button class="submit" type="submit" name="submit" id="submit" onclick="return checkId(document.form1.courseId)">Adauga</button>
 
                     <button class="reset" type="reset">Reset</button>
 
@@ -125,18 +125,40 @@ include("../include/inHeaderAdmin.php");
     <br>
     <br>
     <br>
+
 <?php
 include ("../include/footer.php");
 global $conn;
 
 if(isset($_POST["submit"])) {
-    $quiz_course_id = $_POST["courseId"];
+    $course_id = $_POST["courseId"];
 
-    $id_max = "SELECT * FROM quiz";
+
+    $verifyCourse = $conn->prepare("select * from courses where course_id=?");
+    $verifyCourse->execute(array($course_id));
+
+    $rows = $verifyCourse->rowCount();
+
+
+    if($rows == 0){
+        die("<script>alert('Ne pare rau, nu exista niciun curs cu id-ul " . $course_id . " !')</script>");
+    }
+
+
+    $verifyQuiz = $conn->prepare("select * from quiz where course_id=?");
+    $verifyQuiz->execute(array($course_id));
+
+    if($verifyQuiz->rowCount() == 1){
+        die("<script>alert('Ne pare rau, pentru acest curs deja exista un test!')</script>");
+    }
+
+
+    $id_max = $conn->prepare("SELECT * FROM quiz");
+
+    $id_max ->execute();
     $maxim_id = -1;
-    $run_id = mysqli_query($conn,$id_max);
 
-    while($result2 = mysqli_fetch_array($run_id)) {
+    while($result2 = $id_max->fetch()) {
         if((int)$result2["quiz_id"] > $maxim_id) {
             $maxim_id = (int)$result2["quiz_id"];
         }
@@ -149,29 +171,31 @@ if(isset($_POST["submit"])) {
 
     $quiz_id++;
 
-    $insertQuiz = "INSERT INTO quiz(quiz_id,quiz_course_id) values($quiz_id, $quiz_course_id)";
-
-    $runQuiz = mysqli_query($conn, $insertQuiz);
+    $insertQuiz = $conn->prepare("INSERT INTO quiz(quiz_id,course_id) values(?, ?)");
 
 
+    $res = $insertQuiz ->execute(array($quiz_id,$course_id));
 
+    if(!$res){
+        echo "<script>alert('Ne pare rau, nu s-a putut efectua introducerea testului!')</script>";
+    }
 
-    $max_id_question = "select * from question";
-    $max_id_choice = "select * from question_choices";
+    $max_id_question = $conn->prepare("select * from question");
+    $max_id_choice = $conn->prepare("select * from question_choices");
+
+    $max_id_question->execute();
+    $max_id_choice->execute();
 
     $maxim_id_q = -1;
     $maxim_id_c = -1;
 
-    $run_id_q = mysqli_query($conn, $max_id_question);
-    $run_id_c = mysqli_query($conn, $max_id_choice);
-
-    while ($result = mysqli_fetch_array($run_id_q)) {
+    while ($result = $max_id_question->fetch()) {
         if ((int)$result["question_id"] > $maxim_id_q) {
             $maxim_id_q = (int)$result["question_id"];
         }
     }
 
-    while ($result = mysqli_fetch_array($run_id_c)) {
+    while ($result = $max_id_choice->fetch()) {
         if ((int)$result["choice_id"] > $maxim_id_c) {
             $maxim_id_c = (int)$result["choice_id"];
         }
@@ -198,8 +222,14 @@ if(isset($_POST["submit"])) {
         $question = $_POST[$q . $qNumber];
         $question_id++;
 
-        $insertQuestion = "insert into question values('$question_id', '$quiz_id', '$question')";
-        $runQuestion = mysqli_query($conn, $insertQuestion);
+        $insertQuestion = $conn->prepare("insert into question values(?, ?, ?)");
+
+
+        $res = $insertQuestion ->execute(array($question_id,$quiz_id,$question));
+
+        if(!$res){
+            echo "<script>alert('Ne pare rau, nu s-a putut efectua introducerea intrebarii!')</script>";
+        }
 
         $choiceNumber = 1;
 
@@ -211,14 +241,17 @@ if(isset($_POST["submit"])) {
 
             $postChoice = $_POST[$choiceName];
             $choice_id++;
-            if (strcmp($correctChoice, $postChoice) == 0) {
-                $insertChoice = "insert into question_choices values('$choice_id', '$question_id', '$postChoice', '1')";
-                $runChoice = mysqli_query($conn, $insertChoice);
+            if(strcmp($correctChoice, $postChoice) == 0) {
+                $insertChoice = $conn->prepare("insert into question_choices values(?, ?, ?, '1')");
             } else {
-                $insertChoice = "insert into question_choices values('$choice_id', '$question_id', '$postChoice', '0')";
-                $runChoice = mysqli_query($conn, $insertChoice);
+                $insertChoice = $conn->prepare("insert into question_choices values(?, ?, ?, '0')");
             }
 
+            $res = $insertChoice->execute(array($choice_id,$question_id,$postChoice));
+
+            if(!$res){
+                echo "<script>alert('Ne pare rau, nu s-a putut efectua introducerea variantei de raspuns!')</script>";
+            }
 
             $choiceNumber++;
         }
@@ -226,6 +259,8 @@ if(isset($_POST["submit"])) {
 
         $qNumber++;
     }
+
+    echo "<script>alert('Testul a fost adaugat!')</script>";
 
 }
 

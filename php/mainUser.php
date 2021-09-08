@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <?php
 session_start();
-include("../include/inHeaderUser.php");
+
 if(!isset($_SESSION['user_id'])){
     header("location: ../index.php");
 }
+
+include("../include/inHeaderUser.php");
 
 
 
@@ -14,7 +16,7 @@ if(!isset($_SESSION['user_id'])){
 <div class="content">
 
     <div class="gallery">
-        <a href="editProfileUser.php">
+        <a href="editProfile.php">
             <img src="../images/profil.png" alt="Northern Lights" width="600" height="400">
         </a>
         <div class="desc">Editeaza profilul</div>

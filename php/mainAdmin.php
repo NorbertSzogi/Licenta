@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <?php
 session_start();
-include("../include/inHeaderAdmin.php");
+
 if(!isset($_SESSION['admin_id'])){
     header("location: ../index.php");
 }
+include("../include/inHeaderAdmin.php");
 ?>
 <title>Home</title>
 <link rel="stylesheet" type="text/css" href="../css/admin.css">
@@ -31,7 +32,7 @@ if(!isset($_SESSION['admin_id'])){
 
 
     <div class="gallery">
-        <a href="editProfileAdmin.php">
+        <a href="editProfile.php">
             <img src="../images/profil.png" alt="Editeaza profilul" width="600" height="400">
         </a>
         <div class="desc">Editeaza profilul</div>

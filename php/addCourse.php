@@ -25,7 +25,7 @@ include("../include/inHeaderAdmin.php");
 
 
                     <label for="Fundal"><b>Imagine fundal:</b></label>
-                    <input class="white_text" type="file" name="Fundal"  >
+                    <input class="white_text" type="file" name="fundal"  >
 
                     <label class="texts"><b>Introduceti textul</b></label>
                     <input type="text" placeholder="Introduceti textul" name="text1">
@@ -57,17 +57,17 @@ if(isset($_POST['submit'])) {
 
     $title = $_POST['titlu'];
 
-    $postFundal = $_FILES['Fundal'];
+    $postFundal = $_FILES['fundal'];
 
-    $id_max = "select * from courses";
+    $id_max = $conn->prepare("select * from courses");
 
-    $run_id = mysqli_query($conn, $id_max);
+    $id_max ->execute();
 
     $maxim_id = -1;
 
     $targetDir = "../uploads/";
 
-    while($result2 = mysqli_fetch_array($run_id))
+    while($result2 = $id_max->fetch())
     {
         if((int)$result2["course_id"] > $maxim_id)
         {
@@ -101,9 +101,9 @@ if(isset($_POST['submit'])) {
         }
 
         if (move_uploaded_file($postFundal["tmp_name"], $targetFile)) {
-            echo "The file " . htmlspecialchars(basename($targetFile)) . " has been uploaded.";
+            echo "Fisierul " . htmlspecialchars(basename($targetFile)) . " a fost incarcat.";
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Ne cerem scuze, incarcarea fisierul a dat gres. Va rugam sa reveniti mai tarziu.";
         }
 
         if ($fileType == "mp4")
@@ -117,32 +117,38 @@ if(isset($_POST['submit'])) {
         $fileType = "0";
     }
 
+    $insert_course = $conn->prepare("insert into courses values(?,?,?)");
 
-    $insert_course = "insert into courses values('$course_id', '$title', '$targetFile')";
-    $run_insert_course = mysqli_query($conn, $insert_course);
+    //$insert_course = "insert into courses values('$course_id', '$title', '$targetFile')";
+
+    $res = $insert_course ->execute(array($course_id,$title,$targetFile));
+
+    if(!$res){
+        die("<script>alert('Nu s-a putut adauga cursul!')</script>");
+    }
 
     $i = 1;
 
     $text = "text";
     $file = "file";
 
-    $text_id = "select * from texts";
-    $file_id = "select * from files";
+    $text_id = $conn->prepare("select * from texts");
+    $file_id = $conn->prepare("select * from files");
 
-    $run_text_id = mysqli_query($conn, $text_id);
-    $run_file_id = mysqli_query($conn, $file_id);
+    $text_id ->execute();
+    $file_id ->execute();
 
     $maxim_text_id = -1;
     $maxim_file_id = -1;
 
-    while($result = mysqli_fetch_array($run_text_id)){
+    while($result = $text_id->fetch()){
         if((int)$result["text_id"] > $maxim_text_id)
         {
             $maxim_text_id = (int)$result["text_id"];
         }
     }
 
-    while($result = mysqli_fetch_array($run_file_id)){
+    while($result = $file_id->fetch()){
         if((int)$result["file_id"] > $maxim_file_id)
         {
             $maxim_file_id = (int)$result["file_id"];
@@ -153,6 +159,7 @@ if(isset($_POST['submit'])) {
         $text_id = 0;
     else
         $text_id = $maxim_text_id;
+
 
     if($maxim_file_id == -1)
         $file_id = 0;
@@ -174,16 +181,20 @@ if(isset($_POST['submit'])) {
         // introducing text in database
         $text_id++;
 
-        $insertText = "insert into texts values('$text_id', '$course_id', '$postText')";
-        $run_insert_text = mysqli_query($conn, $insertText);
+        $insertText = $conn->prepare("insert into texts values(?,?,?)");
 
+
+        $res = $insertText->execute(array($text_id,$course_id,$postText));
+
+        if(!$res){
+            die("<script>alert('Nu s-a putut adauga textul pentru curs!')</script>");
+        }
 
 
         //introducing the file in the database
-
+        $file_id++;
         if($postFile['name'] !== "") {
-
-            $fileName = $file . (++$file_id);
+            $fileName = $file . $file_id;
             $targetFile = $targetDir . $postFile['name'];
 
             $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
@@ -208,16 +219,16 @@ if(isset($_POST['submit'])) {
 
         }
         else{
-            $file_id++;
             $targetFile = "0";
             $fileType = "0";
         }
 
-        $insertFile = "insert into files values('$file_id', '$course_id', '$targetFile', '$fileType')";
+        $insertFile = $conn->prepare("insert into files values(?,?,?,?)");
 
-        $run_insert_file = mysqli_query($conn, $insertFile);
+        $res = $insertFile ->execute(array($file_id,$course_id,$targetFile,$fileType));
 
-
+        if(!$res)
+            die("<script>alert('Nu s-a putut adauga fisierul pentru curs!')</script>");
 
 
         $i++;

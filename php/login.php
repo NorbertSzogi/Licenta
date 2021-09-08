@@ -40,38 +40,36 @@ if(isset($_POST["submit"]))
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $check_user = "select * from users where user_email='$email' AND user_pass='$password'";
-    $check_admin = "select * from admins where admin_email='$email' AND admin_pass='$password'";
+    $check_user = $conn->prepare("select * from users where email=? AND pass=?");
+    $check_admin = $conn->prepare("select * from admins where email=? AND pass=?");
 
-    $run_user = mysqli_query($conn,$check_user);
+    $check_user ->execute(array($email,$password));
+    $check_admin ->execute(array($email,$password));
 
-
-
-    $rows_user = mysqli_num_rows($run_user);
+    $rows_user = $check_user->rowCount();
 
     if($rows_user == 1){
 
-        $result = mysqli_fetch_array($run_user);
+        $result = $check_user->fetch();
         $_SESSION['user_id'] = $result['user_id'];
 
         $user_id = $result["user_id"];
         echo "<script>alert('USER');</script>";
-        echo "<script>window.open('/Licenta/php/mainUser.php', '_self')</script>";
+        echo "<script>window.open('mainUser.php', '_self')</script>";
     }
 
-    $run_admin = mysqli_query($conn,$check_admin);
 
-    $rows_admin = mysqli_num_rows($run_admin);
+    $rows_admin = $check_admin->rowCount();
 
     if($rows_admin == 1){
 
-        $result = mysqli_fetch_array($run_admin);
+        $result = $check_admin->fetch();
         $_SESSION['admin_id'] = $result['admin_id'];
 
         $admin_id = $result["admin_id"];
 
         echo "<script>alert('ADMIN');</script>";
-        echo "<script>window.open('/Licenta/php/mainAdmin.php', '_self')</script>";
+        echo "<script>window.open('mainAdmin.php', '_self')</script>";
     }
 
     if($rows_user != 1 and $rows_admin != 1)

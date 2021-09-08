@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: sept. 04, 2021 la 12:29 AM
+-- Timp de generare: sept. 08, 2021 la 03:35 PM
 -- Versiune server: 10.4.20-MariaDB
 -- Versiune PHP: 8.0.9
 
@@ -31,8 +31,8 @@ CREATE TABLE `admins` (
   `admin_id` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `admin_email` varchar(255) NOT NULL,
-  `admin_pass` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `pass` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -40,9 +40,10 @@ CREATE TABLE `admins` (
 -- Eliminarea datelor din tabel `admins`
 --
 
-INSERT INTO `admins` (`admin_id`, `first_name`, `last_name`, `admin_email`, `admin_pass`, `username`) VALUES
+INSERT INTO `admins` (`admin_id`, `first_name`, `last_name`, `email`, `pass`, `username`) VALUES
 ('2', 'Szogi', 'Norbert', 'norby2608@gmail.com', 'afara nu ninge', 'Pikachu'),
-('3', 'Admin', '84654165', 'szogi_norbert@yahoo.com', '123', 'Admin.84654165.3');
+('3', 'Admin', '84654165', 'szogi_norbert@yahoo.com', '123', 'Admin.84654165.3'),
+('4', 'Szogi', 'Norbert', 'nicolae.colin00@e-uvt.ro', '123', 'Szogi.Norbert.4');
 
 -- --------------------------------------------------------
 
@@ -76,8 +77,7 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`course_id`, `title`, `image`) VALUES
-('1', 'Schimb de ulei', '../uploads/fundal1.jpg'),
-('3', 'Schimb de ulei', '../uploads/fundal3.jpg');
+('1', 'Schimb de ulei', '../uploads/fundal1.jpg');
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,7 @@ INSERT INTO `courses` (`course_id`, `title`, `image`) VALUES
 
 CREATE TABLE `files` (
   `file_id` int(255) NOT NULL,
-  `file_course_id` varchar(255) NOT NULL,
+  `course_id` varchar(255) NOT NULL,
   `reference` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -96,7 +96,7 @@ CREATE TABLE `files` (
 -- Eliminarea datelor din tabel `files`
 --
 
-INSERT INTO `files` (`file_id`, `file_course_id`, `reference`, `type`) VALUES
+INSERT INTO `files` (`file_id`, `course_id`, `reference`, `type`) VALUES
 (1, '1', '0', '0'),
 (2, '1', '0', '0'),
 (3, '1', '0', '0'),
@@ -108,27 +108,13 @@ INSERT INTO `files` (`file_id`, `file_course_id`, `reference`, `type`) VALUES
 (9, '1', '0', '0'),
 (10, '1', '../uploads/file10.jpg', 'image'),
 (11, '1', '../uploads/file11.jpg', 'image'),
-(12, '1', '0', '0'),
 (13, '1', '0', '0'),
 (14, '1', '../uploads/file19.mp4', 'video'),
 (15, '1', '0', '0'),
 (16, '1', '0', '0'),
 (17, '1', '0', '0'),
 (18, '1', '0', '0'),
-(19, '1', '../uploads/file19.mp4', 'video'),
-(20, '3', '0', '0'),
-(21, '3', '0', '0'),
-(22, '3', '0', '0'),
-(23, '3', '0', '0'),
-(24, '3', '../uploads/file24.jpg', 'image'),
-(25, '3', '0', '0'),
-(26, '3', '../uploads/file26.jpg', 'image'),
-(27, '3', '../uploads/file27.jpg', 'image'),
-(28, '3', '0', '0'),
-(29, '3', '../uploads/file29.jpg', 'image'),
-(30, '3', '../uploads/file30.jpg', 'image'),
-(31, '3', '../uploads/file31.mp4', 'video'),
-(32, '3', '../uploads/file32.mp4', 'video');
+(19, '1', '../uploads/file19.mp4', 'video');
 
 -- --------------------------------------------------------
 
@@ -244,14 +230,14 @@ INSERT INTO `question_choices` (`choice_id`, `question_id`, `text`, `is_correct`
 
 CREATE TABLE `quiz` (
   `quiz_id` varchar(255) NOT NULL,
-  `quiz_course_id` varchar(255) NOT NULL
+  `course_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Eliminarea datelor din tabel `quiz`
 --
 
-INSERT INTO `quiz` (`quiz_id`, `quiz_course_id`) VALUES
+INSERT INTO `quiz` (`quiz_id`, `course_id`) VALUES
 ('1', '1');
 
 -- --------------------------------------------------------
@@ -262,7 +248,7 @@ INSERT INTO `quiz` (`quiz_id`, `quiz_course_id`) VALUES
 
 CREATE TABLE `texts` (
   `text_id` int(255) NOT NULL,
-  `text_course_id` varchar(255) NOT NULL,
+  `course_id` varchar(255) NOT NULL,
   `text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -270,7 +256,7 @@ CREATE TABLE `texts` (
 -- Eliminarea datelor din tabel `texts`
 --
 
-INSERT INTO `texts` (`text_id`, `text_course_id`, `text`) VALUES
+INSERT INTO `texts` (`text_id`, `course_id`, `text`) VALUES
 (1, '1', 'Schimbul de ulei este foarte important pentru vehiculele conventionale, cu motoare cu ardere interna. Fara ulei, aceste motoare ar ceda in cateva minute de rulat la ralanti.'),
 (2, '1', 'Uleiul reduce frecarea din motor, in acelasi timp reducand si uzura acestuia. Cu cat un ulei este mai bun, cu atat motorul autovehiculului va fi mai sanatos pe termen lung.'),
 (3, '1', 'Un schimb de ulei se efectueaza, in medie, la fiecare 15.000 de kilometri rulati.'),
@@ -281,20 +267,7 @@ INSERT INTO `texts` (`text_id`, `text_course_id`, `text`) VALUES
 (8, '1', 'Filtrul de ulei nou'),
 (9, '1', 'Urmatorul filtru care trebuie schimbat odata cu revizia, este filtrul de combustibil. Diferenta dintre un filtrul vechi si unul nou este vizibila, dupa cum urmeaza:'),
 (10, '1', 'Filtrul vechi'),
-(11, '1', 'Filtrul nou'),
-(13, '3', 'Schimbul de ulei este foarte important pentru vehiculele conventionale, cu motoare cu ardere interna. Fara ulei, aceste motoare ar ceda in cateva minute de rulat la ralanti.'),
-(14, '3', 'Uleiul reduce frecarea din motor, in acelasi timp reducand si uzura acestuia. Cu cat un ulei este mai bun, cu atat motorul autovehiculului va fi mai sanatos pe termen lung.'),
-(15, '3', 'Un schimb de ulei se efectueaza, in medie, la fiecare 15.000 de kilometri rulati.'),
-(16, '3', 'Lucrurile care se efectueaza in timpul unui schimb de ulei, sunt:'),
-(17, '3', 'Schimbarea uleiului'),
-(18, '3', 'Schimbarea filtrului de ulei. In continuare se poate observa diferenta dintre un filtru de ulei nou si un filtru de ulei vechi, care urmeaza a fi schimbat.'),
-(19, '3', 'Filtrul de ulei vechi:'),
-(20, '3', 'Filtrul de ulei nou'),
-(21, '3', 'Urmatorul filtru care trebuie schimbat odata cu revizia, este filtrul de combustibil. Diferenta dintre un filtrul vechi si unul nou este vizibila, dupa cum urmeaza:'),
-(22, '3', 'Filtrul vechi'),
-(23, '3', 'Filtrul nou'),
-(24, '3', 'video'),
-(25, '3', 'video 2222');
+(11, '1', 'Filtrul nou');
 
 -- --------------------------------------------------------
 
@@ -306,8 +279,8 @@ CREATE TABLE `users` (
   `user_id` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `user_email` varchar(255) NOT NULL,
-  `user_pass` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `pass` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -315,9 +288,10 @@ CREATE TABLE `users` (
 -- Eliminarea datelor din tabel `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `user_email`, `user_pass`, `username`) VALUES
-('1', 'User', '84654165tgdfgadfgdfg', 'norbert.szogi99@e-uvt.ro', '123', 'User.84654165.1'),
-('2', 'Szogi', 'Norbert', 'dianna_mihaela20@yahoo.com', '123', 'Szogi.Norbert.2');
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pass`, `username`) VALUES
+('1', 'User', '84654', 'norbert.szogi99@e-uvt.ro', '123', 'User.8'),
+('2', 'Szogi', 'Norbert', 'dianna_mihaela20@yahoo.com', '123', 'Szogi.Norbert.2'),
+('3', 'Szogi', 'Norbert', 'szogi_rozalia@yahoo.com', '123', 'Szogi.Norbert.3');
 
 --
 -- Indexuri pentru tabele eliminate
@@ -328,7 +302,7 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `user_email`, `user_p
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`),
-  ADD UNIQUE KEY `admin_email` (`admin_email`);
+  ADD UNIQUE KEY `admin_email` (`email`);
 
 --
 -- Indexuri pentru tabele `comments`
@@ -348,7 +322,7 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `files`
   ADD PRIMARY KEY (`file_id`),
-  ADD KEY `file_course_id` (`file_course_id`);
+  ADD KEY `file_course_id` (`course_id`);
 
 --
 -- Indexuri pentru tabele `question`
@@ -375,14 +349,14 @@ ALTER TABLE `quiz`
 --
 ALTER TABLE `texts`
   ADD PRIMARY KEY (`text_id`),
-  ADD KEY `text_course_id` (`text_course_id`);
+  ADD KEY `text_course_id` (`course_id`);
 
 --
 -- Indexuri pentru tabele `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `user_email` (`user_email`);
+  ADD UNIQUE KEY `user_email` (`email`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

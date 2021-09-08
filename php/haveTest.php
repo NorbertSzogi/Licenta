@@ -16,11 +16,11 @@ global $conn;
 
 $course_id = $_GET["course_id"];
 
-$selectQuiz = "select * from quiz where quiz_course_id='$course_id'";
+$selectQuiz = $conn->prepare("select * from quiz where course_id=?");
 
-$runQuiz = mysqli_query($conn, $selectQuiz);
+$selectQuiz->execute(array($course_id));
 
-$result = mysqli_fetch_array($runQuiz);
+$result = $selectQuiz->fetch();
 
 $quiz_id = $result["quiz_id"];
 
@@ -50,17 +50,19 @@ $quiz_id = $result["quiz_id"];
                     <hr>
 
                     <?php
-                        $selectQuestions = "select * from question where quiz_id='$quiz_id'";
-                        $runQuestions = mysqli_query($conn, $selectQuestions);
+                        $selectQuestions = $conn->prepare("select * from question where quiz_id=?");
+                        $selectQuestions ->execute(array($quiz_id));
+
                         $i = 0;
-                        while($result = mysqli_fetch_array($runQuestions)){
+                        while($result = $selectQuestions->fetch()){
                             $name = "choice" . ++$i;
                             echo "<br><label><b> " . $i . ". " . $result["question"]  .  " </b></label>";
                             $question_id = $result["question_id"];
-                            $selectChoices = "select * from question_choices where question_id='$question_id'";
-                            $runChoices = mysqli_query($conn, $selectChoices);
+                            $selectChoices = $conn->prepare("select * from question_choices where question_id=?");
+                            $selectChoices->execute(array($question_id));
 
-                            while($result2 = mysqli_fetch_array($runChoices)){
+
+                            while($result2 = $selectChoices->fetch()){
                                 echo "<br><input type='radio' name='" . $name . "' value='" . $result2["text"] . "'> <span class='variants'>" . $result2["text"] . "</span>";
                             }
                         }
@@ -75,3 +77,9 @@ $quiz_id = $result["quiz_id"];
         </div>
     </form>
 </div>
+
+<?php
+
+if(isset($_POST["submit"])){
+    
+}

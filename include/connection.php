@@ -1,12 +1,10 @@
 <?php
-$server = "localhost";
-$username = "root";
-$password = "";
-$dbname = "auto_learn";
 
-$conn = mysqli_connect($server, $username, $password, $dbname);
+$conn = new PDO('mysql:dbname=auto_learn;host=localhost','root','');
+$conn ->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$conn ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if(!$conn){
-	die("Connection failed!").mysqli_connect_error();
-}
+
+
+
 

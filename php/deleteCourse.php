@@ -1,17 +1,18 @@
 <?php
 session_start();
 include ("../include/inHeaderAdmin.php");
+include ("functions.php");
 ?>
-
+    <script type="text/javascript" src="../javascript/adminJS.js" > </script>
     <link rel="stylesheet" type="text/css" href="../css/admin.css">
     <div class="content">
-        <form action="" method="post">
+        <form action="" method="post" name="form1">
             <div class="container1">
                 <div class="container">
                     <h1 align="center" class="a">Stergere curs</h1>
                     <hr>
 
-                    <label for="courseId"><b>ID:</b></label>
+                    <label for="courseId"><b>ID-ul cursului:</b></label>
                     <input type="text" placeholder="Introduceti id-ul cursului" name="courseId" id="courseId" required>
 
 <br>
@@ -22,7 +23,7 @@ include ("../include/inHeaderAdmin.php");
 
                     <hr>
 
-                    <button class="submit" type="submit" name="submit">Sterge</button>
+                    <button class="submit" type="submit" name="submit" onclick="return checkId(document.form1.courseId)">Sterge</button>
 
                     <button class="reset" type="reset">Reset</button>
 
@@ -37,81 +38,63 @@ include ("../include/footer.php");
 
 if(isset($_POST['submit'])){
     global $conn;
-    $admin_id = $_SESSION['admin_id'];
 
     $admin_pass = $_POST['adminPassword'];
 
-    $verifyPass = "select * from admins where admin_id='$admin_id' and admin_pass='$admin_pass'";
-    $runVerify = mysqli_query($conn,$verifyPass);
-
-    if(mysqli_num_rows($runVerify) == 0){
-        die("<script>alert('Parola introdusa este gresita!')</script>");
-    }
-
     $courseId = $_POST['courseId'];
 
-    $idLength = strlen($courseId);
+    deleteTest($courseId,$admin_pass);
 
-    $j = 0;
-
-    try {
-        for ($i = 0; $i < $idLength; $i++) {
-            $j = $j * 10 + $courseId[$i];
-        }
-    }
-    catch (TypeError $e){
-        die("<script>alert('ID-ul cursului trebuie sa fie de tip intreg !')</script>");
-    }
+    $verifyCourse = $conn->prepare("select * from courses where course_id=?");
 
 
+    $verifyCourse ->execute(array($courseId));
 
-
-
-
-
-
-    $verifyCourse = "select * from courses where course_id='$courseId'";
-    $runVerify = mysqli_query($conn,$verifyCourse);
-
-    if(mysqli_num_rows($runVerify) == 0){
+    if($verifyCourse->rowCount() == 0){
         die("<script>alert('Nu exista un curs cu ID-ul ' + $courseId + ' !')</script>");
     }
 
-    $deleteTexts = "delete from texts where text_course_id='$courseId'";
-    $runTexts = mysqli_query($conn, $deleteTexts);
+    $deleteTexts = $conn->prepare("delete from texts where course_id=?");
 
-    if(!$runTexts)
+    $res = $deleteTexts->execute(array($courseId));
+
+
+    if(!$res)
     {
-        die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea cursului !')</script>");
+        die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea textelor !')</script>");
     }
 
-    $selectFiles = "select * from files where file_course_id='$courseId'";
-    $runFiles = mysqli_query($conn, $selectFiles);
+    $selectFiles =$conn->prepare("select * from files where course_id=?");
+    $selectFiles->execute(array($courseId));
 
-    while ($result=mysqli_fetch_array($runFiles)){
+    while ($result=$selectFiles->fetch()){
         if(strcmp($result["reference"], "0") != 0)
             unlink($result["reference"]);
     }
 
+    $deleteFiles = $conn->prepare("delete from files where course_id=?");
 
-    $deleteFiles = "delete from files where file_course_id='$courseId'";
-    $runFiles = mysqli_query($conn, $deleteFiles);
+    $res = $deleteFiles->execute(array($courseId));
 
-    if(!$runFiles){
-        die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea cursului !')</script>");
+    if(!$res){
+        die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea fisierelor !')</script>");
     }
 
-    $selectCourse = "select * from courses where course_id='$courseId'";
-    $runCourse = mysqli_query($conn, $selectCourse);
+    $selectCourse = $conn->prepare("select * from courses where course_id=?");
 
-    $result=mysqli_fetch_array($runCourse);
+    $selectCourse ->execute(array($courseId));
+
+
+    $result= $selectCourse->fetch();
     if(strcmp($result["image"], "0") != 0)
         unlink($result["image"]);
 
-    $deleteCourse = "delete from courses where course_id='$courseId'";
-    $runCourse = mysqli_query($conn, $deleteCourse);
+    $deleteCourse = $conn->prepare("delete from courses where course_id=?");
 
-    if(!$runCourse){
+    $res = $deleteCourse ->execute(array($courseId));
+
+
+    if(!$res){
         die("<script>alert('Ne pare rau, nu s-a putut efectua stergerea cursului !')</script>");
     }
 

@@ -101,3 +101,13 @@ function questionValue(questionId, choiceId){
 
     alert(questionId.value);
 }
+
+function checkId(buton){
+    var course_id = buton.value;
+    if(isNaN(course_id) || course_id<1){
+        alert("Valoarea id-ului cursului trebuie sa fie intreg pozitiv!");
+        return false;
+    }
+    else
+        return true;
+}

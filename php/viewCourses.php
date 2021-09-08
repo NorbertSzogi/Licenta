@@ -14,11 +14,11 @@ else{
 
 global $conn;
 
-$selectCourses = "select * from courses";
+$selectCourses = $conn->prepare("select * from courses");
+$selectCourses ->execute();
 
-$run_courses = mysqli_query($conn, $selectCourses);
 echo "<div class='content'>";
-while($course = mysqli_fetch_array($run_courses)){
+while($course = $selectCourses->fetch()){
     echo "<div class='gallery'>
             <a href='viewCourse.php?course_id=" . $course["course_id"] . "'>
                 <img src='" . $course["image"] . "' width='600' height='400'></a>

@@ -76,7 +76,6 @@ include("../include/footer.php");
 
 ?>
 
-</body>
 <script>
 
     function validari(inputText)
@@ -85,7 +84,7 @@ include("../include/footer.php");
         var pass1 = document.form1.password.value;
         var pass2 = document.form1.password2.value;
 
-        if(inputText.value.match(mailformat) && pass1.toString() == pass2.toString())
+        if(inputText.value.match(mailformat) && pass1.toString() === pass2.toString())
         {
             return true;
         }
@@ -93,11 +92,11 @@ include("../include/footer.php");
         {
             if(!inputText.value.match(mailformat))
             {
-                alert("Ati introdus o adresa de e-mail gresita!");
+                alert("Formatul email-ului nu este acceptat!");
                 document.form1.email.focus();
             }
 
-            if(pass1.toString() != pass2.toString())
+            if(pass1.toString() !== pass2.toString())
             {
                 alert("Parolele nu corespund!");
                 document.form1.password.focus();
@@ -112,13 +111,13 @@ include("../include/footer.php");
     function userType(radioButton){
         var x = radioButton.value;
 
-        if(x == "administrator"){
+        if(x === "administrator"){
             document.getElementById("security_passwords").removeAttribute("hidden");
             document.getElementById("sec_pass1").setAttribute("required","");
             document.getElementById("sec_pass2").setAttribute("required","");
             document.getElementById("sec_pass3").setAttribute("required","");
         }
-        if(x == "utilizator"){
+        if(x === "utilizator"){
             document.getElementById("security_passwords").setAttribute("hidden","");
             document.getElementById("sec_pass1").removeAttribute("required");
             document.getElementById("sec_pass2").removeAttribute("required");
@@ -128,7 +127,6 @@ include("../include/footer.php");
     
 </script>
 
-</html>
 
 <?php
 
@@ -143,32 +141,36 @@ if(isset($_POST["submit"]))
         $pass2 = $_POST["sec_pass2"];
         $pass3 = $_POST["sec_pass3"];
 
-        $verify_pass = "SELECT * FROM passwords WHERE pass1=$pass1 AND pass2=$pass2 AND pass3=$pass3";
+        $verify_pass = $conn -> prepare("SELECT * FROM passwords WHERE pass1=? AND pass2=? AND pass3=?");
 
-        $run_pass = mysqli_query($conn,$verify_pass);
+        $params = array($pass1,$pass2,$pass3);
 
-        $result = mysqli_fetch_array($run_pass);
+        $verify_pass ->execute($params);
 
-        if($result == NULL)
+        $result = $verify_pass ->rowCount();
+
+        if($result === 0)
         {
-            echo "<script> alert('Parolele de securitate sunt gresite!') </script>";
+            echo "<script> alert('Parolele de securitate nu sunt corecte!') </script>";
             //echo "<script> window.open('security_failed.php', '_self') </script>";
         }
         else{
             $email = $_POST["email"];
 
-            $check_email1 = "select * from admins where admin_email='$email'";
-            $check_email2 = "select * from users where user_email='$email'";
-            $run1 = mysqli_query($conn,$check_email1);
-            $run2 = mysqli_query($conn,$check_email2);
+            $check_email1 = $conn->prepare("select * from admins where email=?");
+            $check_email2 = $conn->prepare("select * from users where email=?");
 
-            $rows1 = mysqli_num_rows($run1);
-            $rows2 = mysqli_num_rows($run2);
+
+            $check_email1 ->execute(array($email));
+            $check_email2 ->execute(array($email));
+
+            $rows1 = $check_email1->rowCount();
+            $rows2 = $check_email2->rowCount();
 
             if($rows1 == 1 or $rows2 == 1){
 
                 //va urma
-                die("Ne pare rau, email ul este deja folosit!");
+                die("<script>alert('Ne pare rau, email ul este deja folosit!')</script>");
             }
 
 
@@ -177,13 +179,13 @@ if(isset($_POST["submit"]))
 
             $password = $_POST["password"];
 
-            $id_max = "select * from admins";
+            $id_max = $conn->prepare("select * from admins");
 
-            $run_id = mysqli_query($conn, $id_max);
+            $id_max->execute();
 
             $maxim_id = -1;
 
-            while($result2 = mysqli_fetch_array($run_id))
+            while($result2 = $id_max->fetch())
             {
                  if((int)$result2["admin_id"] > $maxim_id)
                  {
@@ -198,11 +200,18 @@ if(isset($_POST["submit"]))
                 $admin_id = "1";
                 $username = $first_name . "." . $last_name . "." . $admin_id;
 
-                $insert_admin = "insert into admins values('$admin_id', '$first_name', '$last_name', '$email', '$password', '$username')";
+                $insert_admin = $conn->prepare("insert into admins values(?,?,?,?,?,?)");
 
-                $run_insert = mysqli_query($conn, $insert_admin);
+
+                $res = $insert_admin->execute(array($admin_id,$first_name,$last_name,$email,$password,$username));
+
+
                 // if
-                echo "Felicitari, ati fost introdus in baza de date";
+                if($res)
+                    echo "<script>alert('Felicitari, ati fost introdus in baza de date')</script>";
+                //echo username ul tau este
+                else
+                    echo "<script>alert('Ne pare rau, inregistrarea a esuat, va rugam sa reveniti mai tarziu!')</script>";
                 // echo username ul tau este
 
                 //va urma
@@ -215,14 +224,17 @@ if(isset($_POST["submit"]))
                 $admin_id = (string)$admin_id;
                 $username = $first_name . "." . $last_name . "." . $admin_id;
 
+                $insert_admin = $conn->prepare("insert into admins values(?,?,?,?,?,?)");
+
+                $res = $insert_admin->execute(array($admin_id,$first_name,$last_name,$email,$password,$username));
 
 
-                $insert_admin = "insert into admins values('$admin_id','$first_name','$last_name','$email','$password','$username')";
-
-                $run_insert = mysqli_query($conn, $insert_admin);
-                // if
-                echo "Felicitari, ati fost introdus in baza de date";
+                if($res)
+                    echo "<script>alert('Felicitari, ati fost introdus in baza de date')</script>";
                 //echo username ul tau este
+                else
+                    echo "<script>alert('Ne pare rau, inregistrarea a esuat, va rugam sa reveniti mai tarziu!')</script>";
+
 
                 //va urma
                 //echo "<script> window.open('admin_insert_succes.php', '_self') </script>";
@@ -239,23 +251,27 @@ if(isset($_POST["submit"]))
         $password = $_POST["password"];
 
 
-        $check_email1 = "select * from users where user_email='$email'";
-        $check_email2 = "select * from admins where admin_email='$email'";
-        $run1 = mysqli_query($conn,$check_email1);
-        $run2 = mysqli_query($conn,$check_email2);
+        $check_email1 = $conn->prepare("select * from users where email=?");
+        $check_email2 = $conn->prepare("select * from admins where email=?");
 
-        $rows1 = mysqli_num_rows($run1);
-        $rows2 = mysqli_num_rows($run2);
+        $check_email1->execute(array($email));
+        $check_email2->execute(array($email));
+
+
+        $rows1 = $check_email1->rowCount();
+        $rows2 = $check_email2->rowCount();
+
 
         if($rows1 == 1 or $rows2 == 1){
             die("<script>alert('Ne pare rau, email-ul este deja folosit!')</script>");
         }
 
-        $check_id = "select * from users";
-        $run = mysqli_query($conn, $check_id);
+        $check_id = $conn->prepare("select * from users");
+        $check_id->execute();
+
 
         $maxim_id = -1;
-        while($res = mysqli_fetch_array($run)){
+        while($res = $check_id->fetch()){
             if((int)$res["user_id"] > $maxim_id)
             {
                 $maxim_id = (int)$res["user_id"];
@@ -264,17 +280,21 @@ if(isset($_POST["submit"]))
 
 
 
+
         if($maxim_id == -1)
         {
             $user_id = "1";
             $username = $first_name . "." . $last_name . "." . $user_id;
 
-            $insert_user = "insert into users values('$user_id', '$first_name', '$last_name', '$email', '$password', '$username')";
+            $insert_user = $conn->prepare("insert into users values(?,?,?,?,?,?)");
 
-            $run_insert = mysqli_query($conn, $insert_user);
+            $res = $insert_user->execute(array($user_id,$first_name,$last_name,$email,$password,$username));
 
-            //va urma
-            echo "Ati fost introdus";
+
+            if($res)
+                echo "<script>alert('Ati fost introdus in baza de date!')</script>";
+            else
+                echo "<script>alert('Ne pare rau, inregistrarea a esuat, va rugam sa reveniti mai tarziu!')</script>";
         }
         else{
             $user_id = $maxim_id + 1;
@@ -282,12 +302,15 @@ if(isset($_POST["submit"]))
 
             $username = $first_name . "." . $last_name . "." . $user_id;
 
-            $insert_user = "insert into users values('$user_id', '$first_name', '$last_name', '$email', '$password', '$username')";
+            $insert_user = $conn->prepare("insert into users values(?,?,?,?,?,?)");
 
-            $run_insert = mysqli_query($conn, $insert_user);
+            $res = $insert_user->execute(array($user_id,$first_name,$last_name,$email,$password,$username));
 
-            //va urma
-            echo "Ati fost introdus";
+
+            if($res)
+                echo "<script>alert('Ati fost introdus in baza de date!')</script>";
+            else
+                echo "<script>alert('Ne pare rau, inregistrarea a esuat, va rugam sa reveniti mai tarziu!')</script>";
 
         }
 

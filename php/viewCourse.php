@@ -28,15 +28,19 @@ else{
 global $conn;
 
 $course_id = $_GET["course_id"];
-$select_course = "select * from courses where course_id='$course_id'";
-$run_course = mysqli_query($conn, $select_course);
-$course = mysqli_fetch_array($run_course);
+
+$select_course = $conn->prepare("select * from courses where course_id=?");
+$select_course->execute(array($course_id));
+
+$course = $select_course->fetch();
 echo "<h2 class='title'>" . $course["title"] . "</h2><hr>";
-$select_texts = "select * from texts where text_course_id='$course_id'";
-$select_files = "select * from files where file_course_id='$course_id'";
-$run_texts = mysqli_query($conn, $select_texts);
-$run_files = mysqli_query($conn, $select_files);
-while($texts = mysqli_fetch_array($run_texts) and $files = mysqli_fetch_array($run_files)){
+$select_texts = $conn->prepare("select * from texts where course_id=?");
+$select_texts ->execute(array($course_id));
+
+$select_files = $conn->prepare("select * from files where course_id=?");
+$select_files ->execute(array($course_id));
+
+while($texts = $select_texts->fetch() and $files = $select_files->fetch()){
     if(strcmp($texts['text'],"") != 0){
         echo  "<br>" . $texts['text'];
     }

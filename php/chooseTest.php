@@ -14,11 +14,12 @@ echo "<link rel='stylesheet' type='text/css' href='../css/admin.css'>";
 
 global $conn;
 
-$selectCourses = "select * from courses";
+$selectCourses = $conn->prepare("select * from courses");
 
-$run_courses = mysqli_query($conn, $selectCourses);
+$selectCourses ->execute();
+
 echo "<div class='content'>";
-while($course = mysqli_fetch_array($run_courses)){
+while($course = $selectCourses->fetch()){
     echo "<div class='gallery'>
             <a href='haveTest.php?course_id=" . $course["course_id"] . "'>
                 <img src='" . $course["image"] . "' width='600' height='400'></a>
