@@ -25,7 +25,7 @@ include("../include/inHeaderUser.php");
 
 
     <div class="gallery">
-        <a href="#">
+        <a href="chooseTest.php">
             <img src="../images/teste.jpg" alt="Northern Lights" width="600" height="400">
         </a>
         <div class="desc">Alege test</div>

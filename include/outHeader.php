@@ -21,7 +21,10 @@
                             <ul class="ani-menu">
                                 <li><a href="/Licenta/php/login.php">Log in</a></li>
                                 <li><a href="/Licenta/php/signup.php">Sign up</a></li>
-                                <li><a href="#">About</a></li>
+                                <li>Telefon: 0761959263</li>
+                                <li>E-mail: norbert.szogi99@e-uvt.ro</li>
+
+
                             </ul>
                         </li>
                     </ul>

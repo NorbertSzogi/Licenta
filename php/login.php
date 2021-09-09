@@ -54,7 +54,6 @@ if(isset($_POST["submit"]))
         $_SESSION['user_id'] = $result['user_id'];
 
         $user_id = $result["user_id"];
-        echo "<script>alert('USER');</script>";
         echo "<script>window.open('mainUser.php', '_self')</script>";
     }
 
@@ -68,7 +67,6 @@ if(isset($_POST["submit"]))
 
         $admin_id = $result["admin_id"];
 
-        echo "<script>alert('ADMIN');</script>";
         echo "<script>window.open('mainAdmin.php', '_self')</script>";
     }
 

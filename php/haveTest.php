@@ -77,9 +77,41 @@ $quiz_id = $result["quiz_id"];
         </div>
     </form>
 </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <?php
 
+include ("../include/footer.php");
+// setam error reporting pe zero pentru a nu afisa warning-uri pe site in caz ca utilizatorul uita sa bifeze un raspuns la o intrebare
+error_reporting(0);
 if(isset($_POST["submit"])){
-    
+    $selectQuestions = $conn->prepare("select * from question where quiz_id=?");
+    $selectQuestions ->execute(array($quiz_id));
+
+    $i = 0;
+    $totalPoints = 0;
+
+    while($result = $selectQuestions->fetch()){
+        $name = "choice" . ++$i;
+        $chosenVariant = $_POST[$name];
+        $question_id = $result["question_id"];
+
+        $selectChoices = $conn->prepare("select * from question_choices where question_id=? and text=? and is_correct='1'");
+        $selectChoices->execute(array($question_id,$chosenVariant));
+
+        if($selectChoices->rowCount() == 1){
+            $totalPoints++;
+        }
+
+    }
+
+
+
+    echo "<script>alert('Punctajul dumneavoastra este: ". $totalPoints . "/10 !')</script>";
+
 }
+

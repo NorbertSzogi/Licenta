@@ -7,18 +7,13 @@ html,body{
     margin: 0;
 }
 
+
+
 body{
     background-image: url("../images/fundalAdmin.jpg");
 }
 
-body.notLogged{
-    overflow-x: hidden;
-    background: url("../images/background.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
+
 
 body.logged{
     overflow-x: hidden;
@@ -42,28 +37,6 @@ body.logged{
     border-radius:34px;
 }
 
-h1.a{
-    font-family: Algerian;
-    color: white;
-    font-size: max(25px,2.5vw);
-}
-
-label{
-    font-family: "Comic Sans MS";
-    color: white;
-}
-
-input[type=text], input[type=password]{
-    color: black;
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border-radius: 34px;
-    background: #f1f1f1;
-    opacity: 70%;
-    font-family: "Comic Sans MS";
-}
 
 p.user_type{
     color: white;
@@ -82,6 +55,19 @@ input[type=radio]{
     width: 15px;
     background-color: #eee;
     border-radius: 50%;
+}
+
+
+input[type=text], input[type=password]{
+    color: black;
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border-radius: 34px;
+    background: #f1f1f1;
+    opacity: 70%;
+    font-family: "Comic Sans MS";
 }
 
 
@@ -132,20 +118,7 @@ button.reset:active{
     transition: 0.1s;
 }
 
-footer.foot{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 100px;
-    background-color: #45a29e;
-    opacity: 60%;
-}
 
-div.footer{
-    width: 30%;
-    margin-top: auto;
-    padding: 40px 0;
-}
 
 div.gallery {
     margin: 80px;
@@ -184,49 +157,68 @@ div.desc {
 }
 
 
-.comments{
-    //
+.mySlides {display: none;}
+img.slideshow{vertical-align: middle;}
+
+
+.slideshow-container {
+    max-width: 1300px;
+    position: relative;
+    margin: auto;
 }
 
-* {
-    box-sizing: border-box;
-}
 
-html,body{
-    height: 100%;
-    margin: 0;
-}
-
-body.notLogged{
-    overflow-x: hidden;
-    background: url("../images/background.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-body.logged{
-    overflow-x: hidden;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-.container1{
+.text {
+    color: #66fcf1;
+    font-weight: bold;
+    -webkit-text-stroke: 0.02px black;
+    font-size: max(1.2vw,14px);
+    font-weight: bold;
+    font-family: "Raleway", sans-serif;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
     width: 100%;
-    height: 100%;
+    text-align: center;
 }
 
-.container {
-    width:50%;
-    height:100%;
-    padding: 16px;
-    background: #1F2833;
-    margin:auto;
-    border-radius:34px;
+
+
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
 }
+
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 3.5s;
+    animation-name: fade;
+    animation-duration: 3.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+
+@media only screen and (max-width: 300px) {
+    .text {font-size: 11px}
+}
+
+
 
 h1.a{
     font-family: Algerian, serif;
@@ -240,79 +232,8 @@ label{
     color: white;
 }
 
-input[type=text], input[type=password]{
-    color: black;
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border-radius: 34px;
-    background: #f1f1f1;
-    opacity: 70%;
-    font-family: "Comic Sans MS";
-}
 
 
-
-
-
-input[type=radio]{
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 15px;
-    width: 15px;
-    background-color: #eee;
-    border-radius: 50%;
-}
-
-
-
-input[type=text]:focus, input[type=password]:focus {
-    background-color: #c5c6c7;
-    outline: none;
-}
-
-button.submit, button.reset {
-    color: black;
-    padding: 16px;
-    margin: 8px 0;
-    border-radius:34px;
-    cursor: pointer;
-    width: 20%;
-    font-family: "Comic Sans MS";
-    font-weight: bold;
-    font-size: max(10px, 1vw);
-}
-
-button.submit{
-    background-color: #66fcf1;
-}
-
-button.reset{
-    background-color: #45a29e;
-}
-
-button.reset:hover{
-    background-color: #1f2833;
-    transition: 0.3s;
-
-}
-
-button.submit:hover{
-    background-color: #45a29e;
-    transition: 0.3s;
-}
-
-button.submit:active{
-    background-color: #1f2833;
-    transition: 0.1s;
-}
-
-button.reset:active{
-    background-color: #0b0c10;
-    transition: 0.1s;
-}
 
 footer.foot{
     width: 100%;
@@ -321,7 +242,9 @@ footer.foot{
     height: 100px;
     background-color: #45a29e;
     opacity: 60%;
+    margin-bottom: -100px;
 }
+
 
 div.footer{
     width: 30%;
@@ -344,4 +267,152 @@ video.video{
 
 table.table{
     background: white;
+    border: none ;
 }
+
+.sectiune{
+    margin: 20% auto 10%;
+    width: 60%;
+    height: 350px;
+}
+
+td{
+    width: 50%;
+
+}
+
+tr.rand1{
+    height: 15%;
+    text-align: center;
+    font-family: "Raleway";
+    font-size: 30px;
+    font-weight: bold;
+}
+
+td.coloana_stanga{
+    padding-left: 15px;
+    background: #c5c6c7;
+}
+
+td.coloana_dreapta{
+    background: #45a29e;
+}
+
+th.titlu{
+    text-align: center;
+    background: #1F2833;
+    color: #ffffff;
+}
+
+p.indent{
+    text-indent: 25px;
+}
+
+
+
+
+
+.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+body.notLogged{
+    overflow-x: hidden;
+    background: url("../images/background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.well{
+    background-image: url("../images/poza.jpg");
+    display: flex;
+}
+
+.menu{
+    position: relative;
+}
+
+.ani-menu{
+    visibility: hidden;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(-3em);
+    z-index: -1;
+    transition: all 0.3s ease 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+    border-radius: 23px;
+    min-width: 100px;
+}
+
+.menu:focus .ani-menu,
+.menu:focus-within .ani-menu,
+.menu:hover .ani-menu{
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0);
+    transition-delay: 0s, 0s, 0.3s;
+}
+
+.menu:hover{
+    visibility: visible;
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(0);
+    transition-delay: 0s, 0s, 0s, 0.3s;
+}
+
+nav a{
+    color: #000;
+    display: block;
+    padding: 15px 15px;
+    text-decoration: none;
+    font-family: "Comic Sans MS";
+    font-weight: bold;
+    font-size: max(15px, 1vw);
+
+}
+
+.ani-menu a{
+    padding: 15px 10px;
+}
+
+.ani-menu a:hover{
+    background: #45a29e;
+    border-radius: 23px;
+}
+
+
+
+nav ul, nav ul li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav > ul{
+    background: #262626;
+    text-align: center;
+}
+
+nav > ul > li{
+    display: inline-block;
+    border-left: 1px solid #000;
+}
+
+nav > ul > li:first-child{
+    border-left: none;
+}
+
+.ani-menu{
+    background: #66fcf1;
+}
+
+.content{
+    min-height: 100%;
+    margin-bottom: -100px;
+    padding: 20px;
+}
+
