@@ -31,4 +31,3 @@ echo "</div>";
 
 include("../include/footer.php");
 
-?>

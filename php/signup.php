@@ -152,7 +152,7 @@ if(isset($_POST["submit"]))
         if($result === 0)
         {
             echo "<script> alert('Parolele de securitate nu sunt corecte!') </script>";
-            //echo "<script> window.open('security_failed.php', '_self') </script>";
+
         }
         else{
             $email = $_POST["email"];
@@ -168,8 +168,7 @@ if(isset($_POST["submit"]))
             $rows2 = $check_email2->rowCount();
 
             if($rows1 == 1 or $rows2 == 1){
-
-                //va urma
+                
                 die("<script>alert('Ne pare rau, email ul este deja folosit!')</script>");
             }
 
@@ -193,7 +192,7 @@ if(isset($_POST["submit"]))
                  }
             }
 
-            //echo $maxim_id;
+            
 
             if($maxim_id == -1){
 
@@ -206,16 +205,13 @@ if(isset($_POST["submit"]))
                 $res = $insert_admin->execute(array($admin_id,$first_name,$last_name,$email,$password,$username));
 
 
-                // if
+                
                 if($res)
                     echo "<script>alert('Felicitari, ati fost introdus in baza de date')</script>";
-                //echo username ul tau este
+                
                 else
                     echo "<script>alert('Ne pare rau, inregistrarea a esuat, va rugam sa reveniti mai tarziu!')</script>";
-                // echo username ul tau este
-
-                //va urma
-                //echo "<script> window.open('admin_insert_succes.php', '_self') </script>";
+                
 
 
             }
@@ -231,13 +227,12 @@ if(isset($_POST["submit"]))
 
                 if($res)
                     echo "<script>alert('Felicitari, ati fost introdus in baza de date')</script>";
-                //echo username ul tau este
+                
                 else
                     echo "<script>alert('Ne pare rau, inregistrarea a esuat, va rugam sa reveniti mai tarziu!')</script>";
 
 
-                //va urma
-                //echo "<script> window.open('admin_insert_succes.php', '_self') </script>";
+               
             }
         }
 

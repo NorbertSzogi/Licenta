@@ -99,7 +99,6 @@ function questionValue(questionId, choiceId){
 
     questionId.value = choice.value;
 
-    alert(questionId.value);
 }
 
 function checkId(buton){

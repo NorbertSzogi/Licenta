@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: sept. 09, 2021 la 09:51 PM
+-- Timp de generare: sept. 09, 2021 la 10:41 PM
 -- Versiune server: 10.4.20-MariaDB
 -- Versiune PHP: 8.0.9
 
@@ -41,9 +41,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`admin_id`, `first_name`, `last_name`, `email`, `pass`, `username`) VALUES
-('2', 'Hasna', 'Diana', 'norby2608@gmail.com', 'afara nu ninge', 'Pikachu'),
-('3', 'Admin', '84654165', 'szogi_norbert@yahoo.com', '123', 'Admin.84654165.3'),
-('4', 'Szogi', 'Norbert', 'nicolae.colin00@e-uvt.ro', '123', 'Szogi.Norbert.4');
+('2', 'Hasna', 'Diana', 'norby2608@gmail.com', 'afara nu ninge', 'Pikachu');
 
 -- --------------------------------------------------------
 
@@ -65,7 +63,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `course_id`, `user_id`, `text`, `author`, `date`) VALUES
-(12, '1', '2', 'Un curs foarte intreresant, nu am stiut ca sunt atatea lucruri de stiut pentru fiecare revizie.', 'admin', '2021-09-09 18:54:06');
+(12, '1', '2', 'Un curs foarte intreresant, nu am stiut ca sunt atatea lucruri de stiut pentru fiecare revizie.', 'admin', '2021-09-09 18:54:06'),
+(13, '2', '1', 'Aceste sfaturi mi-au fost de folos in ultimul timp, va multumesc', 'user', '2021-09-09 20:24:56'),
+(14, '2', '2', 'Va multumesc pentru sfaturile ajutatoare, nu stiam de ce masina mea scoate fum albastru', 'admin', '2021-09-09 20:26:00');
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,17 @@ CREATE TABLE `question` (
 INSERT INTO `question` (`question_id`, `quiz_id`, `question`) VALUES
 ('1', '1', 'Pentru ce tip de vehicule trebuie facuta revizia de ulei si filtre? '),
 ('10', '1', 'In cat timp se gripeaza un motor cu ardere interna daca acesta nu contine ulei?'),
+('11', '2', 'Cand trebuie verificata presiunea din anvelope? '),
+('12', '2', 'Cand se schimba antigelul?'),
+('13', '2', 'Ce se recomanda sa faceti dupa un drum lung, extraurban?'),
+('14', '2', 'De ce este bine ca ambreiajul sa fie calcat la pornirea motorului?'),
+('15', '2', 'Ce trebuie sa faceti atunci cand motorul este rece?'),
+('16', '2', 'Cum trebuie sa procedati daca se aprinde martorul rosu de la ulei in mers?'),
+('17', '2', 'Din ce cauza apare fumul albastru la esapament? '),
+('18', '2', 'Ce se recomanda pentru a scoate un consum cat mai eficient?'),
+('19', '2', 'Ce uleiuri trebuie utilizate la schimbul de ulei de motor?'),
 ('2', '1', 'Ce s-ar intampla daca schimbul de ulei nu s-ar efectua la timp? '),
+('20', '2', 'Din ce cauza apare fumul alb la esapament?'),
 ('3', '1', 'Care este scopul unui ulei pentru motoarele cu ardere interna? '),
 ('4', '1', 'Care este intervalul mediu de kilometri pentru care trebuie efectuat un schimb de ulei? (In Romania)'),
 ('5', '1', 'Care dintre urmatoarele filtre se recomanda a fi schimbate odata cu schimbarea uleiului?'),
@@ -247,10 +257,50 @@ INSERT INTO `question_choices` (`choice_id`, `question_id`, `text`, `is_correct`
 ('39', '10', 'Motorul poate functiona si fara ulei pe o durata de 100 de minute', '0'),
 ('4', '1', 'Trotinete', '0'),
 ('40', '10', 'Motorul se gripeaza doar daca uleiul depaseste nivelul \"MAX\" de pe joja de ulei', '0'),
+('41', '11', 'In fiecare zi', '0'),
+('42', '11', 'Cel putin o data pe luna', '1'),
+('43', '11', 'O data pe an', '0'),
+('44', '11', 'Nu trebuie verificata niciodata, anvelopele nu isi modifica presiunea', '0'),
+('45', '12', 'La fiecare 6 luni', '0'),
+('46', '12', 'Antigelul se schimba la fiecare 5-10 ani', '1'),
+('47', '12', 'Antigelul se schimba la fiecare 1-2 ani', '0'),
+('48', '12', 'Antigelul se schimba impreuna cu schimbul de ulei', '0'),
+('49', '13', 'Sa opriti motorul imediat cum opriti masina', '0'),
 ('5', '2', 'Autoturismul va lua foc', '0'),
+('50', '13', 'Nu se recomanda nimic special', '0'),
+('51', '13', 'Sa lasati motorul pornit la ralanti, pentru a se raci uleiul', '1'),
+('52', '13', 'Sa mai parcurgeti cativa kilometri in regim urban', '0'),
+('53', '14', 'Pentru a ne asigura ca motorul va porni, chiar daca masina este intr-o viteza', '0'),
+('54', '14', 'Pentru a scadea presiunea asupra motorului', '1'),
+('55', '14', 'Nu se intampla nimic daca pornim motorul cu ambreiajul apasat', '0'),
+('56', '14', 'Se recomanda apasarea ambreiajului pentru a nu crea vibratii in habitaclu', '0'),
+('57', '15', 'Sa circulati cu masina turand putin motorul, pentru a exista o ungere eficienta', '1'),
+('58', '15', 'Sa turati puternic motorul, pentru a se incalzi cat mai repede ', '0'),
+('59', '15', 'Trebuie sa asteptam ca motorul sa ajunga la temperatura optima de functionare', '0'),
 ('6', '2', 'Se strica filtrele', '0'),
+('60', '15', 'Putem pleca la drum imediat ce motorul a pornit', '0'),
+('61', '16', 'Va continuati drumul, deoarece nu exista pericole', '0'),
+('62', '16', 'Verificati uleiul atunci cand ajungeti la destinatie', '0'),
+('63', '16', 'Opriti motorul in cel mai scurt timp', '1'),
+('64', '16', 'Trebuie efectuat urmatorul schimb de ulei', '0'),
+('65', '17', 'Fumul albastru apare atunci cand masina este subturata in majoritatea timpului', '0'),
+('66', '17', 'Fumul albastru apare atunci cand consumul de carburant este foarte crescut', '0'),
+('67', '17', 'Este normal ca o masina sa evacueze fum albastru, nefiind nicio problema', '0'),
+('68', '17', 'Fumul albastru apare atunci cand masina consuma mult ulei', '1'),
+('69', '18', 'Sa circulati agresiv, folosind cat mai mult franele', '0'),
 ('7', '2', 'Se gripeaza componentele din motor aflate in miscare', '1'),
+('70', '18', 'Sa scoateti masina din viteza de fiecare data cand trebuie sa scadeti viteza', '0'),
+('71', '18', 'Consumul este acelasi indiferent de stilul de condus', '0'),
+('72', '18', 'Utilizarea cat mai frecventa a franei de motor', '1'),
+('73', '19', 'Se poate utiliza orice ulei, nu exista o regula', '0'),
+('74', '19', 'Trebuie utilizat numai uleiul care are normele recomandate de producator', '1'),
+('75', '19', 'Se recomanda utilizarea unui ulei cat mai vascos', '0'),
+('76', '19', 'Se recomanda folosirea unui ulei cat mai subtire', '0'),
+('77', '20', 'Din cauza consumul crescut de ulei', '0'),
+('78', '20', 'Din cauza consumului crescut de carburant', '0'),
+('79', '20', 'Alimentarea cu carburantul gresit', '0'),
 ('8', '2', 'Nu se intampla nimic', '0'),
+('80', '20', 'Din cauza consumului de antigel', '1'),
 ('9', '3', 'Reduce frecarea intre componente', '1');
 
 -- --------------------------------------------------------
@@ -269,7 +319,8 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`quiz_id`, `course_id`) VALUES
-('1', '1');
+('1', '1'),
+('2', '2');
 
 -- --------------------------------------------------------
 
@@ -350,9 +401,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pass`, `username`) VALUES
-('1', 'Utilizator', 'Obisnuit', 'norbert.szogi99@e-uvt.ro', '123', 'User.8'),
-('2', 'Szogi', 'Norbert', 'dianna_mihaela20@yahoo.com', '123', 'Szogi.Norbert.2'),
-('3', 'Szogi', 'Norbert', 'szogi_rozalia@yahoo.com', '123', 'Szogi.Norbert.3');
+('1', 'Utilizator', 'Obisnuit', 'norbert.szogi99@e-uvt.ro', '123', 'User.8');
 
 --
 -- Indexuri pentru tabele eliminate
@@ -427,7 +476,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pentru tabele `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `comment_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
